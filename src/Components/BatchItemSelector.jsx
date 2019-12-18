@@ -10,6 +10,7 @@ export function BatchItemSelector() {
 	})))
 
 	return <>
+		<h3>Modify batch</h3>
 		{batchSelection.map((x, ix) =>
 			<div key={ix} >
 				<label>

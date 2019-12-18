@@ -24,7 +24,7 @@ h3 {
         /* background: lightgray; */
     }
 
-    & + article {
+    article + article {
         border-top: solid thin gray;
     }
 
