@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import BatchContext from "../Roots/BatchContext"
 import { routingRoot } from "../Roots/RoutingRoot"
 
@@ -17,61 +17,55 @@ function sign(identifier) {
 }
 
 
-class BatchListItem extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { signatures: [] }
-	}
+function BatchListItem(props) {
+	const [state, setState] = useState({ signatures: [] })
+	useEffect(() => {
+		const subscription = routingRoot.subject.subscribe(() => {
+			setState(state => ({
+				...state,
+				signatures: routingRoot.getSignatures(props.identifier)
+			}))
+		})
 
-	componentDidMount() {
-		this.subscription = routingRoot.subject.subscribe(() => {
-			this.setState({
-				...this.state,
-				signatures: routingRoot.getSignatures(this.props.identifier)
-			})
-		});
-	}
+		return () => {
+			// unsubscribe to ensure no memory leaks
+			subscription.unsubscribe()
+		}
+	}, [props.identifier])
 
-	componentWillUnmount() {
-		// unsubscribe to ensure no memory leaks
-		this.subscription.unsubscribe();
-	}
-
-	render() {
-		const { signatures } = this.state
-		const { identifier } = this.props
-		return <>
-			<article>
-				<div className="flex horizontal">
-					<div>
-						<small>Prod. order</small>
-						<br />
-						{identifier.productionOrderNumber}
-					</div>
-					<div>
-						<small>SN</small>
-						<br />
-						{identifier.endItemSerialNumber}
-					</div>
-					<div>
-						<small>Operation</small>
-						<br />
-						{identifier.operationNumber}
-					</div>
+	const { signatures } = state
+	const { identifier } = props
+	return <>
+		<article>
+			<div className="flex horizontal">
+				<div>
+					<small>Prod. order</small>
+					<br />
+					{identifier.productionOrderNumber}
 				</div>
-				<div className="spacer half-line"></div>
-				<div className="flex horizontal">
-					<div>
-						<div><small>Signatures</small></div>
-						<Signatures signatures={signatures} />
-					</div>
-					<div>
-						<button onClick={() => sign(identifier)}>Sign</button>
-					</div>
+				<div>
+					<small>SN</small>
+					<br />
+					{identifier.endItemSerialNumber}
 				</div>
-			</article>
-		</>
-	}
+				<div>
+					<small>Operation</small>
+					<br />
+					{identifier.operationNumber}
+				</div>
+			</div>
+			<div className="spacer half-line"></div>
+			<div className="flex horizontal">
+				<div>
+					<div><small>Signatures</small></div>
+					<Signatures signatures={signatures} />
+				</div>
+				<div>
+					<button onClick={() => sign(identifier)}>Sign</button>
+				</div>
+			</div>
+		</article>
+	</>
 }
 
 
