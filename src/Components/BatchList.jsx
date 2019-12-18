@@ -3,23 +3,23 @@ import BatchContext from "../Roots/BatchContext"
 import { routingRoot } from "../Roots/RoutingRoot"
 
 
+const identifierToKey = identifier => `${identifier.productionOrderNumber}::${identifier.endItemSerialNumber}::${identifier.operationNumber}`
+
 
 export default function BatchList() {
-	// const [selctedItems, setSelectedItems] = useState([])
-	const batch = useContext(BatchContext)
-
-	return batch.map((batchItem, ix) => <BatchListItem key={ix} batchItem={batchItem} />)
+	const { batch } = useContext(BatchContext)
+	return batch.map((identifier) => <BatchListItem key={identifierToKey(identifier)} identifier={identifier} />)
 }
 
-function sign(batchItem) {
-	routingRoot.sign([batchItem], { who: "arjan", when: "2019-12-18 09:56:12", what: "sign" })
+
+function sign(identifier) {
+	routingRoot.sign([identifier], { who: "arjan", when: "2019-12-18 09:56:12", what: "sign" })
 }
 
 
 class BatchListItem extends React.Component {
 	constructor(props) {
 		super(props)
-
 		this.state = { signatures: [] }
 	}
 
@@ -27,7 +27,7 @@ class BatchListItem extends React.Component {
 		this.subscription = routingRoot.subject.subscribe(() => {
 			this.setState({
 				...this.state,
-				signatures: routingRoot.getSignatures(this.props.batchItem)
+				signatures: routingRoot.getSignatures(this.props.identifier)
 			})
 		});
 	}
@@ -38,35 +38,35 @@ class BatchListItem extends React.Component {
 	}
 
 	render() {
-		const { signatures } = this.state;
-		const { batchItem } = this.props;
+		const { signatures } = this.state
+		const { identifier } = this.props
 		return <>
 			<article>
 				<div className="flex horizontal">
 					<div>
 						<small>Prod. order</small>
 						<br />
-						{batchItem.productionOrderNumber}
+						{identifier.productionOrderNumber}
 					</div>
 					<div>
 						<small>SN</small>
 						<br />
-						{batchItem.endItemSerialNumber}
+						{identifier.endItemSerialNumber}
 					</div>
 					<div>
 						<small>Operation</small>
 						<br />
-						{batchItem.operationNumber}
+						{identifier.operationNumber}
 					</div>
 				</div>
 				<div className="spacer half-line"></div>
 				<div className="flex horizontal">
 					<div>
-						<div>Signatures</div>
+						<div><small>Signatures</small></div>
 						<Signatures signatures={signatures} />
 					</div>
 					<div>
-						<button onClick={() => sign(batchItem)}>Sign</button>
+						<button onClick={() => sign(identifier)}>Sign</button>
 					</div>
 				</div>
 			</article>

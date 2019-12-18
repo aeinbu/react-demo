@@ -1,15 +1,19 @@
-import React, { } from 'react'
-import './App.css'
-import './Ugly.css'
+import React, { useState } from 'react'
+import './App.scss'
+// import './Ugly.css'
 import BatchList from "./Components/BatchList"
 import Actions from "./Components/Actions"
-// import BatchContext from "./Roots/BatchContext"
+import BatchContext from "./Roots/BatchContext"
 
 
 function App() {
+	const [state, setState] = useState({batch:[]})
+	const modifyBatch = (batch) => setState({ batch })
+	const context = { batch: state.batch, modifyBatch: modifyBatch }
+
 	return (
-		<div className="App">
-			{/* <BatchContext.Provider value={batch}> */}
+		<>
+			<BatchContext.Provider value={context}>
 				<section className="main-grid">
 					<section className="panel">
 						<h2 className="heading" >Batch items</h2>
@@ -29,8 +33,8 @@ function App() {
 						</div>
 					</section>
 				</section>
-			{/* </BatchContext.Provider> */}
-		</div>
+			</BatchContext.Provider>
+		</>
 	)
 }
 
