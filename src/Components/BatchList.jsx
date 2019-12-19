@@ -17,20 +17,27 @@ function sign(identifier) {
 }
 
 
-function BatchListItem(props) {
-	const [state, setState] = useState({ signatures: [] })
-	useEffect(() => {
-		const subscription = routingRoot.subject.subscribe(() => {
-			setState(state => ({
-				...state,
-				signatures: routingRoot.getSignatures(props.identifier)
-			}))
+function useSubscription(subject, action, deps) {
+	return 	useEffect(() => {
+		const subscription = subject.subscribe(() => {
+			action();
 		})
 
 		return () => {
 			// unsubscribe to ensure no memory leaks
 			subscription.unsubscribe()
 		}
+	}, deps)
+}
+
+
+function BatchListItem(props) {
+	const [state, setState] = useState({ signatures: [] })
+	useSubscription(routingRoot.subject, () => {
+		setState(state => ({
+			...state,
+			signatures: routingRoot.getSignatures(props.identifier)
+		}))
 	}, [props.identifier])
 
 	const { signatures } = state

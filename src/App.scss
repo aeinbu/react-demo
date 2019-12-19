@@ -5,30 +5,28 @@ h3 {
 }
 
 .panel {
-    & {
-        border: solid thin gray;
-        border-radius: 3px;
-        overflow: hidden;
-        padding: 0;
-    }
+    border: solid thin gray;
+    border-radius: 3px;
+    overflow: hidden;
+    padding: 0;
 
-    & > .heading {
+    >.heading {
         padding: .25em .5em;
         background: lightgray;
         border-bottom: thin solid gray;
     }
 
-    & > .body > article {
+    >.body>article {
         margin: 0;
         padding: .25em .5em;
         /* background: lightgray; */
     }
 
-    article + article {
+    article+article {
         border-top: solid thin gray;
     }
 
-    &>* {
+    >* {
         margin: 0;
     }
 }
@@ -71,14 +69,14 @@ body {
 }
 
 .flex {
-	& {
-		display: flex;
-		justify-content: space-between;
-		align-items: flex-start;
-		flex-wrap: nowrap;	
-	}
+    & {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+    }
 
-	&.horizontal {
-		flex-direction: row;
-	}
+    &.horizontal {
+        flex-direction: row;
+    }
 }
