@@ -18,7 +18,7 @@ function sign(identifier) {
 
 
 function useSubscription(subject, action, deps) {
-	return 	useEffect(() => {
+	return useEffect(() => {
 		const subscription = subject.subscribe(() => {
 			action();
 		})
@@ -31,14 +31,23 @@ function useSubscription(subject, action, deps) {
 }
 
 
+function useSubscribedState(initialState, subject, action, deps) {
+	const [state, setState] = useState(initialState)
+	useSubscription(subject, () => setState(action), deps)
+	return [state, setState]
+}
+
+
 function BatchListItem(props) {
-	const [state, setState] = useState({ signatures: [] })
-	useSubscription(routingRoot.subject, () => {
-		setState(state => ({
+	const [state] = useSubscribedState(
+		{ signatures: [] },
+		routingRoot.subject,
+		state => ({
 			...state,
 			signatures: routingRoot.getSignatures(props.identifier)
-		}))
-	}, [props.identifier])
+		}),
+		[props.identifier]
+	)
 
 	const { signatures } = state
 	const { identifier } = props

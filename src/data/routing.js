@@ -1,11 +1,11 @@
 export const routing = [{
-        key: { productionOrderNumber: "300002239", endItemSerialNumber: "AEI-003-01" },
+        key: { productionOrderNumber: "123000456", endItemSerialNumber: "SN2201" },
         routing: [{
                 operationNumber: 10,
                 signatures: [
                     { who: "arjan", when: "2017-10-13 10:30:00", what: "revoked" },
-                    { who: "ole", when: "2017-10-13 10:30:00", what: "sign" },
-                    { who: "robin", when: "2017-10-13 10:45:00", what: "sign" }
+                    { who: "peter", when: "2017-10-13 10:30:00", what: "sign" },
+                    { who: "mary", when: "2017-10-13 10:45:00", what: "sign" }
                 ]
             },
             { operationNumber: 20, signatures: [] },
@@ -14,18 +14,18 @@ export const routing = [{
         ]
     },
     {
-        key: { productionOrderNumber: "300002239", endItemSerialNumber: "AEI-003-02" },
+        key: { productionOrderNumber: "123000456", endItemSerialNumber: "SN2202" },
         routing: [{
                 operationNumber: 10,
                 signatures: [
                     { who: "arjan", when: "2017-10-13 10:31:00", what: "sign" },
-                    { who: "robin", when: "2017-10-13 10:47:00", what: "sign" }
+                    { who: "mary", when: "2017-10-13 10:47:00", what: "sign" }
                 ]
             },
             {
                 operationNumber: 20,
                 signatures: [
-                    { who: "tor inge", when: "2017-10-15 10:30:00", what: "sign" }
+                    { who: "lisa", when: "2017-10-15 10:30:00", what: "sign" }
                 ]
             },
             { operationNumber: 30, signatures: [] },
@@ -33,7 +33,7 @@ export const routing = [{
         ]
     },
     {
-        key: { productionOrderNumber: "300002239", endItemSerialNumber: "AEI-003-03" },
+        key: { productionOrderNumber: "123000456", endItemSerialNumber: "SN2203" },
         routing: [
             { operationNumber: 10, signatures: [] },
             { operationNumber: 20, signatures: [] },
@@ -42,7 +42,7 @@ export const routing = [{
         ]
     },
     {
-        key: { productionOrderNumber: "300002239", endItemSerialNumber: "AEI-003-04" },
+        key: { productionOrderNumber: "123000456", endItemSerialNumber: "SN2204" },
         routing: [
             { operationNumber: 10, signatures: [] },
             { operationNumber: 20, signatures: [] },
@@ -51,10 +51,10 @@ export const routing = [{
         ]
     },
     {
-        key: { productionOrderNumber: "300002239", endItemSerialNumber: "AEI-003-05" },
+        key: { productionOrderNumber: "123000456", endItemSerialNumber: "SN2205" },
         routing: [
             { operationNumber: 10, signatures: [
-                { who: "tor inge", when: "2017-10-15 10:30:00", what: "sign" }
+                { who: "lisa", when: "2017-10-15 10:30:00", what: "sign" }
             ] },
             { operationNumber: 20, signatures: [] },
             { operationNumber: 30, signatures: [] },

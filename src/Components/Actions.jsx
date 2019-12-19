@@ -5,7 +5,7 @@ import { BatchItemSelector } from "./BatchItemSelector"
 
 
 function sign(identifiers) {
-	routingRoot.sign(identifiers, { who: "ole", when: "2019-12-18 10:03:38", what: "sign" })
+	routingRoot.sign(identifiers, { who: "paul", when: "2019-12-18 10:03:38", what: "sign" })
 }
 
 
