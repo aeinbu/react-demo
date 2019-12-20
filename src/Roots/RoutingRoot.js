@@ -8,7 +8,7 @@ class RoutingRoot {
     }
 
     load() {
-        this._data = routing;
+        this._data = routing
 
         this.subject.next()
     }
@@ -29,9 +29,17 @@ class RoutingRoot {
     sign(identifiers, signature) {
         identifiers.forEach(identifier => {
             this._getRouting(identifier).routing.find(x => x.operationNumber === identifier.operationNumber).signatures.push(signature);
-        });
-        this.subject.next();
+        })
+        this.subject.next()
+    }
+
+    revoke(identifiers, signature) {
+        identifiers.forEach(identifier => {
+            const signatures = this._getRouting(identifier).routing.find(x => x.operationNumber === identifier.operationNumber).signatures
+            signatures.find(x => x === signature).what = "revoked"
+        })
+        this.subject.next()
     }
 }
 
-export const routingRoot = new RoutingRoot();
+export const routingRoot = new RoutingRoot()
