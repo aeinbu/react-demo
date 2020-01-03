@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+
 import './App.scss'
 // import './Ugly.css'
 import BatchList from "./Components/BatchList"
@@ -17,7 +18,6 @@ function App() {
 }
 
 function TenantFrame() {
-	console.log("*** Render TenantFrame")
 	const [state, setState] = useState({ tenantId: "200" })
 
 	const diagnostics = { tenantId: state.tenantId }
@@ -29,14 +29,14 @@ function TenantFrame() {
 
 	return (
 		<TenantContext.Provider value={tenantContext}>
-			<BatchFrame />
+			<BatchFrame key={state.tenantId} />
 		</TenantContext.Provider>
 	);
 }
 
 
 function BatchFrame() {
-	console.log("*** Render BatchFrame")
+	const tenantContext = useContext(TenantContext);
 	const [state, setState] = useState({ batch: [] })
 
 	const batchContext = {

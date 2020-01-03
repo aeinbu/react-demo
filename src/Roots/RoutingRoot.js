@@ -1,4 +1,4 @@
-import { BehaviorSubject /*, Observable*/ } from "rxjs"
+import { BehaviorSubject } from "rxjs"
 import { routing } from "../data/routing"
 
 export default class RoutingRoot {

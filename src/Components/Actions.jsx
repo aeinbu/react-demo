@@ -40,10 +40,8 @@ function SignOperations() {
 	const { batch } = useContext(BatchContext)
 	const { routingRoot } = useContext(TenantContext)
 
-	const signature = { who: "paul", when: "2019-12-18 10:03:38", what: "sign" }
-
 	return <>
 		<h3>Sign</h3>
-		<button onClick={() => routingRoot.sign(batch, signature)}>Sign all</button>
+		<button onClick={() => routingRoot.sign(batch, { who: "paul", when: "2019-12-18 10:03:38", what: "sign" })}>Sign all</button>
 	</>
 }

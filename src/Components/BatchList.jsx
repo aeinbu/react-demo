@@ -9,7 +9,6 @@ const identifierToKey = identifier => `${identifier.productionOrderNumber}::${id
 function useSubscription(subject, action, deps) {
 	return useEffect(() => {
 		const subscription = subject.subscribe(() => {
-			console.log("*** subscribtion received")
 			action()
 		})
 
