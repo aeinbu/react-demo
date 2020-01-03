@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
-import BatchContext from "../Roots/BatchContext"
-import { routingRoot } from "../Roots/RoutingRoot"
+import { BatchContext } from "../Contexts/BatchContext"
+import { TenantContext } from "../Contexts/TenantContext"
 
 
 const identifierToKey = identifier => `${identifier.productionOrderNumber}::${identifier.endItemSerialNumber}::${identifier.operationNumber}`
@@ -9,6 +9,7 @@ const identifierToKey = identifier => `${identifier.productionOrderNumber}::${id
 function useSubscription(subject, action, deps) {
 	return useEffect(() => {
 		const subscription = subject.subscribe(() => {
+			console.log("*** subscribtion received")
 			action()
 		})
 
@@ -27,36 +28,15 @@ function useSubscribedState(initialState, subject, action, deps) {
 }
 
 
-// export function useSubscribedState(initialState, subject, action, deps) {
-// 	const [state, setState] = useState(initialState)
-// 	useEffect(() => {
-// 		const subscription = subject.subscribe(() => {
-// 			action()
-// 		})
-// 		return () => {
-// 			subscription.unsubscribe()
-// 		}
-// 	}, [state, subject, action, ...deps])
-// 	return [state, setState]
-// }
-
 export default function BatchList() {
 	const { batch } = useContext(BatchContext)
 	return batch.map((identifier) => <BatchListItem key={identifierToKey(identifier)} identifier={identifier} />)
 }
 
 
-function sign(identifier) {
-	routingRoot.sign([identifier], { who: "arjan", when: "2019-12-18 09:56:12", what: "sign" })
-}
-
-
-function revoke(identifier, signature) {
-	routingRoot.revoke([identifier], signature)
-}
-
-
 function BatchListItem(props) {
+	const { routingRoot } = useContext(TenantContext)
+
 	const [state] = useSubscribedState(
 		{ signatures: [] },
 		routingRoot.subject,
@@ -94,7 +74,7 @@ function BatchListItem(props) {
 					<div><small>Signatures</small></div>
 				</div>
 				<div>
-					<button onClick={() => sign(identifier)}>Sign</button>
+					<button onClick={() => routingRoot.sign([identifier], { who: "arjan", when: "2019-12-18 09:56:12", what: "sign" }) }>Sign</button>
 				</div>
 			</div>
 			<Signatures identifier={identifier} signatures={signatures} />
@@ -112,6 +92,8 @@ function Signatures({ identifier, signatures }) {
 
 
 function Signature({ identifier, signature }) {
+	const { routingRoot } = useContext(TenantContext)
+
 	return signature.what === "revoked"
 		? <>
 			<div className="flex horizontal">
@@ -126,7 +108,7 @@ function Signature({ identifier, signature }) {
 					{signature.who} ({signature.when})
 			</div>
 				<div>
-					<button onClick={() => revoke(identifier, signature)}>Revoke</button>
+					<button onClick={() => routingRoot.revoke([identifier], signature)}>Revoke</button>
 				</div>
 			</div>
 		</>

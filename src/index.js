@@ -5,6 +5,4 @@ import App from './App.jsx'
 
 ReactDOM.render(<>
         <App/>
-        <div className="spacer one-line"></div>
-        <App/>
 </>, document.getElementById('root'))

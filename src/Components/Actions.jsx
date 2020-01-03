@@ -1,12 +1,7 @@
 import React, { useContext, useState } from "react"
-import BatchContext from "../Roots/BatchContext"
-import { routingRoot } from "../Roots/RoutingRoot"
-import { BatchItemSelector } from "./BatchItemSelector"
+import { BatchContext } from "../Contexts/BatchContext"
+import { TenantContext } from "../Contexts/TenantContext"
 
-
-function sign(identifiers) {
-	routingRoot.sign(identifiers, { who: "paul", when: "2019-12-18 10:03:38", what: "sign" })
-}
 
 
 export default function Actions() {
@@ -21,21 +16,17 @@ export default function Actions() {
 		<article>
 			<SignOperations />
 		</article>
-		<article>
-			<BatchItemSelector />
-		</article>
 	</>
 }
 
 
 function RegisterComponent() {
-	// const { batch } = useContext(BatchContext)
 	const [inputText, setInputText] = useState("")
 	const register = () => {
 		console.log("*** registering component", inputText)
 		setInputText("")
 	}
-	
+
 	return <>
 		<h3>Register component</h3>
 		<input type="text" value={inputText} onChange={event => setInputText(event.target.value)} />
@@ -47,8 +38,12 @@ function RegisterComponent() {
 
 function SignOperations() {
 	const { batch } = useContext(BatchContext)
+	const { routingRoot } = useContext(TenantContext)
+
+	const signature = { who: "paul", when: "2019-12-18 10:03:38", what: "sign" }
+
 	return <>
 		<h3>Sign</h3>
-		<button onClick={() => sign(batch)}>Sign all</button>
+		<button onClick={() => routingRoot.sign(batch, signature)}>Sign all</button>
 	</>
 }

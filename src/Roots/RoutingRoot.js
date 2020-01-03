@@ -1,9 +1,10 @@
 import { BehaviorSubject /*, Observable*/ } from "rxjs"
 import { routing } from "../data/routing"
 
-class RoutingRoot {
-    constructor() {
+export default class RoutingRoot {
+    constructor(diagnostics) {
         this.subject = new BehaviorSubject()
+        console.log("*** RoutingRoot::constructor", diagnostics);
         this.load()
     }
 
@@ -41,5 +42,3 @@ class RoutingRoot {
         this.subject.next()
     }
 }
-
-export const routingRoot = new RoutingRoot()
