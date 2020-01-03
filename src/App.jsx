@@ -17,8 +17,9 @@ function App() {
 	return <TenantFrame />
 }
 
+
 function TenantFrame() {
-	const [state, setState] = useState({ tenantId: "200" })
+	const [state, setState] = useState({ tenantId: "" })
 
 	const diagnostics = { tenantId: state.tenantId }
 	const tenantContext = {
@@ -28,15 +29,30 @@ function TenantFrame() {
 	}
 
 	return (
-		<TenantContext.Provider value={tenantContext}>
-			<BatchFrame key={state.tenantId} />
-		</TenantContext.Provider>
+		<TenantContext.Provider value={tenantContext}>{
+			state.tenantId === ""
+				? <TenantIsNotSelected />
+				: <TenantIsSelected key={state.tenantId} />
+		}</TenantContext.Provider>
 	);
 }
 
 
+const TenantIsNotSelected = () => <div className="large">
+	Please select tenant: <TenantSelector />
+</div>
+
+
+const TenantIsSelected = () => <>
+	<section>
+		Current tenant: <TenantSelector />
+	</section>
+	<div className="spacer half-line"></div>
+	<BatchFrame />
+</>
+
+
 function BatchFrame() {
-	const tenantContext = useContext(TenantContext);
 	const [state, setState] = useState({ batch: [] })
 
 	const batchContext = {
@@ -45,35 +61,41 @@ function BatchFrame() {
 	}
 
 	return (
-		<BatchContext.Provider value={batchContext}>
-			<section>
-				<TenantSelector />
-			</section>
-			<div className="spacer half-line"></div>
-			<section className="main-grid">
-				<section className="panel">
-					<h2 className="heading" >Batch items</h2>
-					<div className="body">
-						<BatchList />
-					</div>
-				</section>
-				<section className="panel">
-					<h2 className="heading">Middle panel</h2>
-					<div className="body">
-					</div>
-				</section>
-				<section className="panel">
-					<h2 className="heading">Actions</h2>
-					<div className="body">
-						<Actions />
-					</div>
-				</section>
-			</section>
-			<section>
-				<BatchItemSelector />
-			</section>
-		</BatchContext.Provider>
+		<BatchContext.Provider value={batchContext}>{
+			state.batch.length === 0
+				? <BatchIsEmpty />
+				: <BatchIsNotEmpty />
+		}</BatchContext.Provider>
 	);
 }
+
+
+const BatchIsEmpty = () => <section>
+	<BatchItemSelector />
+</section>
+
+
+const BatchIsNotEmpty = () => <>
+	<section className="main-grid">
+		<section className="panel">
+			<h2 className="heading" >Batch items</h2>
+			<div className="body">
+				<BatchList />
+			</div>
+		</section>
+		<section className="panel">
+			<h2 className="heading">Middle panel</h2>
+			<div className="body">
+			</div>
+		</section>
+		<section className="panel">
+			<h2 className="heading">Actions</h2>
+			<div className="body">
+				<Actions />
+			</div>
+		</section>
+	</section>
+</>
+
 
 export default App
