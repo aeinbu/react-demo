@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 
 import './App.scss'
 // import './Ugly.css'
@@ -14,87 +14,87 @@ import { TenantContext } from "./Contexts/TenantContext"
 
 
 function App() {
-	return <TenantFrame />
+    return <TenantFrame />
 }
 
 
 function TenantFrame() {
-	const [state, setState] = useState({ tenantId: "" })
+    const [state, setState] = useState({ tenantId: "" })
 
-	const diagnostics = { tenantId: state.tenantId }
-	const tenantContext = {
-		tenantId: state.tenantId,
-		switchTenant: (tenantId) => setState({ ...state, tenantId }),
-		routingRoot: new RoutingRoot(diagnostics)
-	}
+    const diagnostics = { tenantId: state.tenantId }
+    const tenantContext = {
+        tenantId: state.tenantId,
+        switchTenant: (tenantId) => setState({ ...state, tenantId }),
+        routingRoot: new RoutingRoot(diagnostics)
+    }
 
-	return (
-		<TenantContext.Provider value={tenantContext}>{
-			state.tenantId === ""
-				? <TenantIsNotSelected />
-				: <TenantIsSelected key={state.tenantId} />
-		}</TenantContext.Provider>
-	);
+    return (
+        <TenantContext.Provider value={tenantContext}>{
+            state.tenantId === ""
+                ? <TenantIsNotSelected />
+                : <TenantIsSelected key={state.tenantId} />
+        }</TenantContext.Provider>
+    );
 }
 
 
 const TenantIsNotSelected = () => <div className="large">
-	Please select tenant: <TenantSelector />
+    Please select tenant: <TenantSelector />
 </div>
 
 
 const TenantIsSelected = () => <>
-	<section>
-		Current tenant: <TenantSelector />
-	</section>
-	<div className="spacer half-line"></div>
-	<BatchFrame />
+    <section>
+        Current tenant: <TenantSelector />
+    </section>
+    <div className="spacer half-line"></div>
+    <BatchFrame />
 </>
 
 
 function BatchFrame() {
-	const [state, setState] = useState({ batch: [] })
+    const [state, setState] = useState({ batch: [] })
 
-	const batchContext = {
-		batch: state.batch,
-		modifyBatch: (batch) => setState({ ...state, batch })
-	}
+    const batchContext = {
+        batch: state.batch,
+        modifyBatch: (batch) => setState({ ...state, batch })
+    }
 
-	return (
-		<BatchContext.Provider value={batchContext}>{
-			state.batch.length === 0
-				? <BatchIsEmpty />
-				: <BatchIsNotEmpty />
-		}</BatchContext.Provider>
-	);
+    return (
+        <BatchContext.Provider value={batchContext}>{
+            state.batch.length === 0
+                ? <BatchIsEmpty />
+                : <BatchIsNotEmpty />
+        }</BatchContext.Provider>
+    );
 }
 
 
 const BatchIsEmpty = () => <section>
-	<BatchItemSelector />
+    <BatchItemSelector />
 </section>
 
 
 const BatchIsNotEmpty = () => <>
-	<section className="main-grid">
-		<section className="panel">
-			<h2 className="heading" >Batch items</h2>
-			<div className="body">
-				<BatchList />
-			</div>
-		</section>
-		<section className="panel">
-			<h2 className="heading">Middle panel</h2>
-			<div className="body">
-			</div>
-		</section>
-		<section className="panel">
-			<h2 className="heading">Actions</h2>
-			<div className="body">
-				<Actions />
-			</div>
-		</section>
-	</section>
+    <section className="main-grid">
+        <section className="panel">
+            <h2 className="heading" >Batch items</h2>
+            <div className="body">
+                <BatchList />
+            </div>
+        </section>
+        <section className="panel">
+            <h2 className="heading">Middle panel</h2>
+            <div className="body">
+            </div>
+        </section>
+        <section className="panel">
+            <h2 className="heading">Actions</h2>
+            <div className="body">
+                <Actions />
+            </div>
+        </section>
+    </section>
 </>
 
 
