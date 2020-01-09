@@ -7,13 +7,12 @@ import { useSubscribedState } from "../Hooks/SubscriptionHooks"
 const identifierToKey = identifier => `${identifier.productionOrderNumber}::${identifier.endItemSerialNumber}::${identifier.operationNumber}`
 
 
-export default function BatchList() {
+export const BatchList = () => {
     const { batch } = useContext(BatchContext)
     return batch.map((identifier) => <BatchListItem key={identifierToKey(identifier)} identifier={identifier} />)
 }
 
-
-function BatchListItem(props) {
+const BatchListItem = (props) => {
     const { routingRoot } = useContext(TenantContext)
 
     const [state] = useSubscribedState(
@@ -63,14 +62,14 @@ function BatchListItem(props) {
 }
 
 
-function Signatures({ identifier, signatures }) {
+const Signatures = ({ identifier, signatures }) => {
     return signatures.length === 0
         ? <em>No signatures yet.</em>
         : signatures.map((signature, ix) => <Signature key={ix} identifier={identifier} signature={signature} />)
 }
 
 
-function Signature({ identifier, signature }) {
+const Signature = ({ identifier, signature }) => {
     const { routingRoot } = useContext(TenantContext)
 
     return signature.what === "revoked"
@@ -78,14 +77,14 @@ function Signature({ identifier, signature }) {
             <div className="flex horizontal">
                 <div className="revoked signature">
                     {signature.who} ({signature.when})
-            </div>
+                </div>
             </div>
         </>
         : <>
             <div className="flex horizontal">
                 <div className="signed signature">
                     {signature.who} ({signature.when})
-            </div>
+                </div>
                 <div>
                     <button onClick={() => routingRoot.revoke([identifier], signature)}>Revoke</button>
                 </div>

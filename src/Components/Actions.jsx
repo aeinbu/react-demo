@@ -3,23 +3,21 @@ import { BatchContext } from "../Contexts/BatchContext"
 import { TenantContext } from "../Contexts/TenantContext"
 
 
-export default function Actions() {
-    return <>
-        <article>
-            <h3>Comment</h3>
-            <button>Comment...</button>
-        </article>
-        <article>
-            <RegisterComponent />
-        </article>
-        <article>
-            <SignOperations />
-        </article>
-    </>
-}
+export const Actions = () => <>
+    <article>
+        <h3>Comment</h3>
+        <button>Comment...</button>
+    </article>
+    <article>
+        <RegisterComponent />
+    </article>
+    <article>
+        <SignOperations />
+    </article>
+</>
 
 
-function RegisterComponent() {
+const RegisterComponent = () => {
     const [inputText, setInputText] = useState("")
     const register = () => {
         console.log("*** registering component", inputText)
@@ -35,7 +33,7 @@ function RegisterComponent() {
 
 
 
-function SignOperations() {
+const SignOperations = () => {
     const { batch } = useContext(BatchContext)
     const { routingRoot } = useContext(TenantContext)
 

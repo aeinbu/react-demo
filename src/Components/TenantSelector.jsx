@@ -10,7 +10,7 @@ const tenants = [
     { id: "400", name: "Delta" }
 ]
 
-export default function TenantSelector() {
+export const TenantSelector = () => {
     const tenantContext = useContext(TenantContext)
 
     return <>
@@ -18,4 +18,4 @@ export default function TenantSelector() {
             {tenants.map(tenant => <option key={tenant.id} value={tenant.id}>{tenant.name}</option>)}
         </select>
     </>
-} 
+}

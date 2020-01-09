@@ -1,10 +1,10 @@
 import { BehaviorSubject } from "rxjs"
 import { routing } from "../data/routing"
 
-export default class RoutingRoot {
+export class RoutingRoot {
     constructor(diagnostics) {
         this.subject = new BehaviorSubject()
-        console.log("*** RoutingRoot::constructor", diagnostics);
+        console.log("*** RoutingRoot::constructor", diagnostics)
         this.load()
     }
 
@@ -15,7 +15,7 @@ export default class RoutingRoot {
     }
 
     getRoutings(identifiers) {
-        return identifiers.map(identifier => this._getRouting(identifier)).routing
+        return identifiers.map(identifier => this._getRouting(identifier).routing)
     }
 
     _getRouting(identifier) {
@@ -29,7 +29,7 @@ export default class RoutingRoot {
 
     sign(identifiers, signature) {
         identifiers.forEach(identifier => {
-            this._getRouting(identifier).routing.find(x => x.operationNumber === identifier.operationNumber).signatures.push(signature);
+            this._getRouting(identifier).routing.find(x => x.operationNumber === identifier.operationNumber).signatures.push(signature)
         })
         this.subject.next()
     }

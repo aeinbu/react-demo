@@ -2,23 +2,21 @@ import React, { useState } from 'react'
 
 import './App.scss'
 // import './Ugly.css'
-import BatchList from "./Components/BatchList"
-import Actions from "./Components/Actions"
-import TenantSelector from "./Components/TenantSelector"
+import { BatchList } from "./Components/BatchList"
+import { Actions } from "./Components/Actions"
+import { TenantSelector } from "./Components/TenantSelector"
 import { BatchItemSelector } from "./Components/BatchItemSelector"
 
-import RoutingRoot from "./Roots/RoutingRoot"
+import { RoutingRoot } from "./Roots/RoutingRoot"
 
 import { BatchContext } from "./Contexts/BatchContext"
 import { TenantContext } from "./Contexts/TenantContext"
 
 
-function App() {
-    return <TenantFrame />
-}
+export const App = () => <TenantFrame />
 
 
-function TenantFrame() {
+const TenantFrame = () => {
     const [state, setState] = useState({ tenantId: "" })
 
     const diagnostics = { tenantId: state.tenantId }
@@ -52,7 +50,7 @@ const TenantIsSelected = () => <>
 </>
 
 
-function BatchFrame() {
+const BatchFrame = () => {
     const [state, setState] = useState({ batch: [] })
 
     const batchContext = {
@@ -97,5 +95,3 @@ const BatchIsNotEmpty = () => <>
     </section>
 </>
 
-
-export default App

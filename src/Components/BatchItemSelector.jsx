@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react"
 import { BatchContext } from "../Contexts/BatchContext"
 import { identifiers } from "../data/identifiers"
 
-export function BatchItemSelector() {
+export const BatchItemSelector = () => {
     const { batch, modifyBatch } = useContext(BatchContext)
     const [batchSelection, setBatchSelection] = useState(identifiers.map(key => ({
         key,
@@ -14,7 +14,7 @@ export function BatchItemSelector() {
         {batchSelection.map((x, ix) =>
             <div key={ix} >
                 <label>
-                    <input type="checkbox" checked={x.isSeleted} onChange={() => {
+                    <input type="checkbox" checked={x.isSelected} onChange={() => {
                         const newSelection = [
                             ...batchSelection.slice(0, ix),
                             { key: x.key, isSelected: !x.isSelected },
